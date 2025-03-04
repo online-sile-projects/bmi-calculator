@@ -4,10 +4,7 @@ const LINE_CONFIG = {
     channelId: '2007000134', // Replace with your Line Channel ID
 };
 
-// Google Sheets API configuration
-const GOOGLE_CONFIG = {
-    apiKey: 'YOUR_API_KEY',  // Replace with your Google API Key
-    clientId: 'YOUR_CLIENT_ID', // Replace with your Google Client ID
-    spreadsheetId: 'YOUR_SPREADSHEET_ID', // Replace with your Google Spreadsheet ID
-    scopes: 'https://www.googleapis.com/auth/spreadsheets',
+// Google Apps Script configuration
+const GAS_CONFIG = {
+    webAppUrl: 'https://script.google.com/macros/s/AKfycbz_wNFnv9jVctIC_FKDR1IpqKdUsZ6UtG2JNxM-iyHOf9xUsGCVmchL8N2t-L-8ycOL_g/exec', // Replace with your deployed GAS Web App URL
 };
