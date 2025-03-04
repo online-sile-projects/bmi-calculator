@@ -3,11 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultDiv = document.getElementById('result');
     const heightInput = document.getElementById('height');
     const weightInput = document.getElementById('weight');
+    const historyListDiv = document.getElementById('history-list');
     
     // 載入之前儲存的資料
     loadFromLocalStorage();
     
-    form.addEventListener('submit', function(e) {
+    // 表單提交處理
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         // 獲取輸入值
@@ -58,6 +60,33 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 將資料儲存到 localStorage
         saveToLocalStorage(heightInput.value, weightInput.value, roundedBmi, category, categoryClass);
+        
+        // 如果用戶已經登錄，保存記錄到 Google Sheets
+        const userProfile = getCurrentUserProfile();
+        if (userProfile) {
+            try {
+                // 保存用戶資料到主表
+                await saveUserToMasterSheet(userProfile);
+                
+                // 保存體重記錄到用戶專屬表格
+                await saveWeightRecord(
+                    userProfile.userId, 
+                    heightInput.value, 
+                    weightInput.value, 
+                    roundedBmi, 
+                    category
+                );
+                
+                // 重新載入體重歷史記錄
+                loadWeightHistory();
+            } catch (error) {
+                console.error('Error saving data to Google Sheets:', error);
+            }
+        } else {
+            resultDiv.innerHTML += `
+                <p class="login-prompt">登入 Line 帳號以保存您的 BMI 記錄</p>
+            `;
+        }
     });
     
     // 儲存資料到 localStorage
@@ -95,4 +124,58 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         }
     }
+    
+    // 載入體重歷史記錄
+    async function loadWeightHistory() {
+        const userProfile = getCurrentUserProfile();
+        if (!userProfile) return;
+        
+        try {
+            const history = await getWeightHistory(userProfile.userId);
+            if (history && history.length > 0) {
+                let historyHTML = '<div class="history-table">';
+                historyHTML += '<div class="history-header">';
+                historyHTML += '<div class="history-cell">日期</div>';
+                historyHTML += '<div class="history-cell">體重 (kg)</div>';
+                historyHTML += '<div class="history-cell">BMI</div>';
+                historyHTML += '<div class="history-cell">類別</div>';
+                historyHTML += '</div>';
+                
+                // 最多顯示10筆記錄
+                const recentHistory = history.slice(0, 10);
+                
+                recentHistory.forEach(record => {
+                    const date = new Date(record[0]).toLocaleDateString();
+                    const weight = record[1];
+                    const bmi = record[3];
+                    const category = record[4];
+                    
+                    historyHTML += '<div class="history-row">';
+                    historyHTML += `<div class="history-cell">${date}</div>`;
+                    historyHTML += `<div class="history-cell">${weight}</div>`;
+                    historyHTML += `<div class="history-cell">${bmi}</div>`;
+                    historyHTML += `<div class="history-cell">${category}</div>`;
+                    historyHTML += '</div>';
+                });
+                
+                historyHTML += '</div>';
+                historyListDiv.innerHTML = historyHTML;
+            } else {
+                historyListDiv.innerHTML = '<p>暫無體重記錄</p>';
+            }
+        } catch (error) {
+            console.error('Error loading weight history:', error);
+            historyListDiv.innerHTML = '<p>載入體重記錄失敗</p>';
+        }
+    }
+    
+    // 監聽 Line 登錄狀態變化
+    document.addEventListener('lineLoginStatusChanged', function() {
+        const userProfile = getCurrentUserProfile();
+        if (userProfile) {
+            loadWeightHistory();
+        } else {
+            historyListDiv.innerHTML = '<p>請先登入以查看您的體重記錄</p>';
+        }
+    });
 });

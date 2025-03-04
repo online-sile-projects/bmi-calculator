@@ -8,12 +8,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Line SDK -->
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <!-- Google API Client Library -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>BMI 計算器</h1>
+            <div class="user-profile" id="user-profile">
+                <!-- User profile will be displayed here after login -->
+            </div>
         </header>
+        
+        <section class="login-section" id="login-section">
+            <button id="line-login-btn" class="login-btn">使用 Line 登入</button>
+            <p id="login-status"></p>
+        </section>
         
         <section class="calculator-section">
             <form id="bmi-form">
@@ -74,7 +87,15 @@
                 </div>
             </div>
         </section>
+        
+        <section class="weight-history" id="weight-history">
+            <h2>體重記錄</h2>
+            <div id="history-list"></div>
+        </section>
     </div>
+    <script src="config.js"></script>
+    <script src="line-auth.js"></script>
+    <script src="sheets-api.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
