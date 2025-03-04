@@ -1,82 +1,247 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+/* 基本重設 */
+* {
     margin: 0;
-    padding: 10px;
+    padding: 0;
     box-sizing: border-box;
 }
 
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f7f7f7;
+    padding: 0;
+    margin: 0;
+}
+
+/* 容器設置 */
 .container {
-    text-align: center;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 標題樣式 */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 16px 0;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+h2 {
+    font-size: 18px;
+    margin: 20px 0 12px;
+    color: #2c3e50;
+}
+
+/* 計算區域樣式 */
+.calculator-section {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+/* 表單元素樣式 */
+.input-group {
     margin-bottom: 20px;
 }
 
-input {
-    margin: 10px 0;
-    padding: 10px;
-    width: calc(100% - 22px);
-    box-sizing: border-box;
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
 }
 
-button {
-    padding: 10px 20px;
-    background-color: #007BFF;
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    -webkit-appearance: none; /* 移除iOS預設樣式 */
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 12px 24px;
+    background-color: #3498db;
     color: white;
     border: none;
     border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
-    width: 100%;
-    box-sizing: border-box;
+    transition: background-color 0.3s;
+    margin-top: 8px;
 }
 
-button:hover {
-    background-color: #0056b3;
+.calculate-btn:hover {
+    background-color: #2980b9;
 }
 
-#result {
-    margin-top: 20px;
-    font-size: 1.2em;
-    font-weight: bold;
+/* 結果區域樣式 */
+.result-box {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #e8f5e9;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    min-height: 60px;
 }
 
-#bmi-reference {
-    margin-top: 20px;
-    text-align: left;
-    width: 100%;
-    max-width: 400px;
+.result-box.visible {
+    display: block !important; /* 使用 !important 確保顯示 */
+    opacity: 1;
+    transition: opacity 0.3s ease-in;
 }
 
-#bmi-reference h2 {
-    font-size: 1.2em;
+.result-content {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.result-content.underweight {
+    background-color: #AED6F1;
+    border: 2px solid #3498db;
+}
+
+.result-content.normal {
+    background-color: #A9DFBF;
+    border: 2px solid #2ecc71;
+}
+
+.result-content.overweight {
+    background-color: #FAD7A0;
+    border: 2px solid #f39c12;
+}
+
+.result-content.obese-mild, .result-content.obese-moderate {
+    background-color: #F5B041;
+    border: 2px solid #e67e22;
+}
+
+.result-content.obese-severe {
+    background-color: #F1948A;
+    border: 2px solid #e74c3c;
+}
+
+.bmi-result {
+    font-size: 20px;
     margin-bottom: 10px;
 }
 
-#bmi-reference ul {
-    padding-left: 20px;
+.bmi-category {
+    font-size: 18px;
+    font-weight: 700;
 }
 
-#bmi-reference li {
+.error {
+    color: #c0392b;
+    font-weight: 500;
+}
+
+/* 參考表樣式 */
+.reference-section {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reference-table {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.reference-item {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.bmi-category {
+    font-weight: 700;
     margin-bottom: 5px;
 }
 
+.bmi-range {
+    font-size: 14px;
+}
+
+/* BMI分類顏色 */
+.underweight { background-color: #AED6F1; }
+.normal { background-color: #A9DFBF; }
+.overweight { background-color: #FAD7A0; }
+.obese-mild { background-color: #F5B041; }
+.obese-moderate { background-color: #F8C471; }
+.obese-severe { background-color: #F1948A; }
+
+/* 腰圍參考樣式 */
+.waist-reference {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.waist-item {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.male { background-color: #D6EAF8; }
+.female { background-color: #F8E0E6; }
+
+.gender {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.waist-value {
+    font-size: 14px;
+}
+
+/* 調整較大螢幕(平板)的顯示 */
+@media (min-width: 768px) {
+    .container {
+        max-width: 700px;
+    }
+    
+    h1 {
+        font-size: 28px;
+    }
+    
+    .reference-table {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 響應式設計 */
 @media (max-width: 600px) {
-    #bmi-reference {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        padding: 10px;
-        box-sizing: border-box;
+    .reference-item, .waist-item {
+        min-width: 100%;
     }
 }

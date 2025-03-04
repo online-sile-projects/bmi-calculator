@@ -2,38 +2,79 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BMI 計算器</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>BMI 計算器</h1>
-        <form id="bmi-form">
-            <label for="height">身高 (cm):</label>
-            <input type="number" id="height" name="height" step="0.01" required>
-            <label for="weight">體重 (kg):</label>
-            <input type="number" id="weight" name="weight" step="0.01" required>
-            <button type="submit">計算</button>
-        </form>
-        <div id="result"></div>
+        <header>
+            <h1>BMI 計算器</h1>
+        </header>
+        
+        <section class="calculator-section">
+            <form id="bmi-form">
+                <div class="input-group">
+                    <label for="height">身高 (cm)</label>
+                    <input type="number" id="height" name="height" step="0.01" required placeholder="請輸入身高">
+                </div>
+                
+                <div class="input-group">
+                    <label for="weight">體重 (kg)</label>
+                    <input type="number" id="weight" name="weight" step="0.01" required placeholder="請輸入體重">
+                </div>
+                
+                <button type="submit" class="calculate-btn">計算 BMI</button>
+            </form>
+            
+            
+        </section>
+        
+        <section class="reference-section" id="bmi-reference">
+            <h2>BMI 參考表</h2>
+            <div class="reference-table">
+                <div class="reference-item underweight">
+                    <div class="bmi-category">體重過輕</div>
+                    <div class="bmi-range">BMI < 18.5</div>
+                </div>
+                <div class="reference-item normal">
+                    <div class="bmi-category">正常範圍</div>
+                    <div class="bmi-range">18.5 ~ 24</div>
+                </div>
+                <div class="reference-item overweight">
+                    <div class="bmi-category">過重</div>
+                    <div class="bmi-range">24 ~ 27</div>
+                </div>
+                <div class="reference-item obese-mild">
+                    <div class="bmi-category">輕度肥胖</div>
+                    <div class="bmi-range">27 ~ 30</div>
+                </div>
+                <div class="reference-item obese-moderate">
+                    <div class="bmi-category">中度肥胖</div>
+                    <div class="bmi-range">30 ~ 35</div>
+                </div>
+                <div class="reference-item obese-severe">
+                    <div class="bmi-category">重度肥胖</div>
+                    <div class="bmi-range">BMI ≧ 35</div>
+                </div>
+            </div>
+            
+            <h2>腰圍參考</h2>
+            <div class="waist-reference">
+                <div class="waist-item male">
+                    <div class="gender">男性</div>
+                    <div class="waist-value">≧ 90 公分</div>
+                </div>
+                <div class="waist-item female">
+                    <div class="gender">女性</div>
+                    <div class="waist-value">≧ 80 公分</div>
+                </div>
+            </div>
+        </section>
     </div>
     <script src="script.js"></script>
-    <div id="bmi-reference">
-        <h2>BMI 參考表</h2>
-        <ul>
-            <li>體重過輕: BMI 小於 18.5</li>
-            <li>正常範圍: 18.5 ≦ BMI < 24</li>
-            <li>過重: 24 ≦ BMI < 27</li>
-            <li>輕度肥胖: 27 ≦ BMI < 30</li>
-            <li>中度肥胖: 30 ≦ BMI < 35</li>
-            <li>重度肥胖: BMI ≧ 35</li>
-        </ul>
-        <h2>腰圍參考</h2>
-        <ul>
-            <li>男性: ≧ 90 公分</li>
-            <li>女性: ≧ 80 公分</li>
-        </ul>
-    </div>
 </body>
 </html>
