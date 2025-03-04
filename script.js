@@ -125,14 +125,55 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // 保存用戶到主表
+    async function saveUserToMasterSheet(userProfile) {
+        try {
+            const response = await fetch(`${GAS_CONFIG.webAppUrl}?action=saveUser&userId=${encodeURIComponent(userProfile.userId)}&displayName=${encodeURIComponent(userProfile.displayName)}&pictureUrl=${encodeURIComponent(userProfile.pictureUrl)}`, {
+                method: 'GET',
+                mode: 'cors'
+            });
+            
+            const result = await response.json();
+            return result.success;
+        } catch (error) {
+            console.error('Error saving user data:', error);
+            return false;
+        }
+    }
+    
+    // 保存體重記錄
+    async function saveWeightRecord(userId, height, weight, bmi, category) {
+        try {
+            const response = await fetch(`${GAS_CONFIG.webAppUrl}?action=saveRecord&userId=${encodeURIComponent(userId)}&height=${encodeURIComponent(height)}&weight=${encodeURIComponent(weight)}&bmi=${encodeURIComponent(bmi)}&category=${encodeURIComponent(category)}`, {
+                method: 'GET',
+                mode: 'cors'
+            });
+            
+            const result = await response.json();
+            return result.success;
+        } catch (error) {
+            console.error('Error saving weight record:', error);
+            return false;
+        }
+    }
+    
     // 載入體重歷史記錄
     async function loadWeightHistory() {
         const userProfile = getCurrentUserProfile();
-        if (!userProfile) return;
+        if (!userProfile) {
+            historyListDiv.innerHTML = '<p>請先登入以查看您的體重記錄</p>';
+            return;
+        }
         
         try {
-            const history = await getWeightHistory(userProfile.userId);
-            if (history && history.length > 0) {
+            const response = await fetch(`${GAS_CONFIG.webAppUrl}?action=getHistory&userId=${encodeURIComponent(userProfile.userId)}`, {
+                method: 'GET',
+                mode: 'cors'
+            });
+            
+            const result = await response.json();
+            
+            if (result.success && result.data && result.data.length > 0) {
                 let historyHTML = '<div class="history-table">';
                 historyHTML += '<div class="history-header">';
                 historyHTML += '<div class="history-cell">日期</div>';
@@ -142,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 historyHTML += '</div>';
                 
                 // 最多顯示10筆記錄
-                const recentHistory = history.slice(0, 10);
+                const recentHistory = result.data.slice(0, 10);
                 
                 recentHistory.forEach(record => {
                     const date = new Date(record[0]).toLocaleDateString();
