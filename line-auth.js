@@ -24,6 +24,8 @@ async function initializeLineLogin() {
             await fetchUserProfile();
             displayUserProfile();
             document.getElementById('line-login-btn').textContent = '登出';
+            // 觸發登錄狀態改變事件
+            triggerLoginStatusChanged();
         } else {
             document.getElementById('login-status').textContent = '未登入';
         }
@@ -44,10 +46,21 @@ function setupLoginButton() {
             document.getElementById('user-profile').innerHTML = '';
             document.getElementById('login-status').textContent = '已登出';
             loginButton.textContent = '使用 Line 登入';
+            
+            // 觸發登錄狀態改變事件
+            triggerLoginStatusChanged();
         } else {
             // Login
             try {
                 await liff.login();
+                // 登入成功後，獲取資料並觸發事件
+                await fetchUserProfile();
+                displayUserProfile();
+                loginButton.textContent = '登出';
+                document.getElementById('login-status').textContent = '已登入';
+                
+                // 觸發登錄狀態改變事件
+                triggerLoginStatusChanged();
             } catch (error) {
                 document.getElementById('login-status').textContent = `登入失敗: ${error.message}`;
                 console.error('Line login failed', error);
@@ -90,4 +103,10 @@ function displayUserProfile() {
 // Get current user profile (for other modules to use)
 function getCurrentUserProfile() {
     return lineUserProfile;
+}
+
+// 觸發登錄狀態改變事件
+function triggerLoginStatusChanged() {
+    const event = new Event('lineLoginStatusChanged');
+    document.dispatchEvent(event);
 }
