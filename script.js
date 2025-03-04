@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 載入之前儲存的資料
     loadFromLocalStorage();
     
+    // 檢查用戶登錄狀態並載入歷史記錄
+    checkLoginAndLoadHistory();
+    
     // 表單提交處理
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -154,6 +157,16 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Error saving weight record:', error);
             return false;
+        }
+    }
+    
+    // 檢查用戶登錄狀態並載入歷史記錄
+    function checkLoginAndLoadHistory() {
+        const userProfile = getCurrentUserProfile();
+        if (userProfile) {
+            loadWeightHistory();
+        } else {
+            historyListDiv.innerHTML = '<p>請先登入以查看您的體重記錄</p>';
         }
     }
     
