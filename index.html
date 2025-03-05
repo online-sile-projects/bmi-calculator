@@ -3,13 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BMI 計算器</title>
+    <title>BMI 計算器 - 免費在線體重指數計算工具</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="免費在線BMI計算器，立即計算您的體重指數，了解您的健康狀況。提供BMI標準參考表、腰圍參考和體重記錄功能。">
+    <meta name="keywords" content="BMI計算器, 體重指數, 健康檢測, 體重管理, 腰圍參考, 肥胖指標, 減肥">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="BMI 計算器 - 免費在線體重指數計算工具">
+    <meta property="og:description" content="免費在線BMI計算器，立即計算您的體重指數，了解您的健康狀況。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://keepbmi.com/">
+    <meta property="og:image" content="https://keepbmi.com/images/bmi-calculator-preview.jpg">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://keepbmi.com/">
+    <!-- Existing CSS and Font links -->
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Line SDK -->
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <!-- Structured Data / Schema.org markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "BMI 計算器",
+        "description": "免費在線BMI計算器，立即計算您的體重指數，了解您的健康狀況。",
+        "url": "https://keepbmi.com/",
+        "applicationCategory": "HealthApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "TWD"
+        }
+    }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -25,7 +53,15 @@
             <p id="login-status"></p>
         </section>
         
+        <!-- SEO-friendly introductory content -->
+        <section class="intro-section">
+            <h2>什麼是BMI指數？</h2>
+            <p>BMI（Body Mass Index）是身體質量指數，是用體重公斤數除以身高米數平方得出的數值，用於評估人體胖瘦程度。通過BMI值，您可以判斷自己是否處於健康體重範圍內，並採取相應措施維護健康。</p>
+            <p>本工具可幫助您快速計算BMI值，並提供專業的健康參考標準。立即使用下方計算器，了解您的健康狀況！</p>
+        </section>
+        
         <section class="calculator-section">
+            <h2>BMI 計算工具</h2>
             <form id="bmi-form">
                 <div class="input-group">
                     <label for="height">身高 (cm)</label>
@@ -89,6 +125,16 @@
             <h2>體重記錄</h2>
             <div id="history-list"></div>
         </section>
+        
+        <!-- SEO-friendly footer content with important keywords -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <h3>關於 BMI 計算器</h3>
+                <p>本 BMI 計算器工具完全免費，幫助您監測體重健康狀況。BMI只是健康的一個指標，若有任何健康問題，請諮詢專業醫師。</p>
+                <p>體重管理是健康生活的重要部分。定期監測您的 BMI 可以幫助您維持理想體重，預防肥胖相關疾病，如心臟病、糖尿病和高血壓。</p>
+                <p>© 2023 BMI 計算器 - 保留所有權利</p>
+            </div>
+        </footer>
     </div>
     <script src="config.js"></script>
     <script src="line-auth.js"></script>
