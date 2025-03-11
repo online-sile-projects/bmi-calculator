@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 載入之前儲存的資料
     loadFromLocalStorage();
     
-    // 檢查用戶登錄狀態並載入歷史記錄
+    // 檢查使用者登入狀態並載入歷史記錄
     checkLoginAndLoadHistory();
     
     // 表單提交處理
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         // 獲取輸入值
-        const height = parseFloat(heightInput.value) / 100; // 轉換成米
+        const height = parseFloat(heightInput.value) / 100; // 轉換成公尺
         const weight = parseFloat(weightInput.value);
         
         // 檢查輸入是否有效
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 將資料儲存到 localStorage
         saveToLocalStorage(heightInput.value, weightInput.value, roundedBmi, category, categoryClass);
         
-        // 如果用戶已經登錄，保存記錄到 Google Sheets
+        // 如果使用者已經登入，保存記錄到 Google Sheets
         const userProfile = getCurrentUserProfile();
         if (userProfile) {
             try {
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } else {
             resultDiv.innerHTML += `
-                <p class="login-prompt">登入 Line 帳號以保存您的 BMI 記錄</p>
+                <p class="login-prompt">登入 Line 帳號以儲存您的 BMI 記錄</p>
             `;
         }
     });
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // 檢查用戶登錄狀態並載入歷史記錄
+    // 檢查使用者登入狀態並載入歷史記錄
     function checkLoginAndLoadHistory() {
         const userProfile = getCurrentUserProfile();
         if (userProfile) {
