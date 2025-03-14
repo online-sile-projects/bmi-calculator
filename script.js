@@ -204,7 +204,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     const bmi = record[3];
                     const category = record[4];
                     
-                    historyHTML += '<div class="history-row">';
+                    // Determine categoryClass based on BMI
+                    let categoryClass = '';
+                    if (bmi < 18.5) {
+                        categoryClass = 'underweight';
+                    } else if (bmi < 24) {
+                        categoryClass = 'normal';
+                    } else if (bmi < 27) {
+                        categoryClass = 'overweight';
+                    } else if (bmi < 30) {
+                        categoryClass = 'obese-mild';
+                    } else if (bmi < 35) {
+                        categoryClass = 'obese-moderate';
+                    } else {
+                        categoryClass = 'obese-severe';
+                    }
+                    
+                    historyHTML += `<div class="history-row ${categoryClass}">`;
                     historyHTML += `<div class="history-cell">${date}</div>`;
                     historyHTML += `<div class="history-cell">${weight}</div>`;
                     historyHTML += `<div class="history-cell">${bmi}</div>`;
