@@ -122,6 +122,8 @@ function saveWeightRecord(e) {
 // Get weight history for a user
 function getWeightHistory(e) {
   const userId = e.parameter.userId;
+  const page = e.parameter.page ? parseInt(e.parameter.page) : 1;
+  const recordsPerPage = e.parameter.recordsPerPage ? parseInt(e.parameter.recordsPerPage) : 0; // 0 means return all records
   
   if (!userId) {
     return ContentService.createTextOutput(JSON.stringify({
@@ -137,7 +139,10 @@ function getWeightHistory(e) {
   if (!userSheet) {
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
-      data: []
+      data: [],
+      totalRecords: 0,
+      totalPages: 0,
+      currentPage: page
     })).setMimeType(ContentService.MimeType.JSON);
   }
   
@@ -147,8 +152,26 @@ function getWeightHistory(e) {
   // Remove header row
   const records = data.slice(1);
   
+  // Sort records with newest first (based on timestamp in column 0)
+  records.sort((a, b) => new Date(b[0]) - new Date(a[0]));
+  
+  const totalRecords = records.length;
+  let totalPages = 1;
+  let paginatedRecords = records;
+  
+  // Apply pagination if requested
+  if (recordsPerPage > 0) {
+    totalPages = Math.ceil(totalRecords / recordsPerPage);
+    const startIndex = (page - 1) * recordsPerPage;
+    const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
+    paginatedRecords = records.slice(startIndex, endIndex);
+  }
+  
   return ContentService.createTextOutput(JSON.stringify({
     success: true,
-    data: records
+    data: paginatedRecords,
+    totalRecords: totalRecords,
+    totalPages: totalPages,
+    currentPage: page
   })).setMimeType(ContentService.MimeType.JSON);
 }

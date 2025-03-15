@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // 載入體重歷史記錄
-    async function loadWeightHistory() {
+    async function loadWeightHistory(page = 1, recordsPerPage = 5) {
         const userProfile = getCurrentUserProfile();
         if (!userProfile) {
             historyListDiv.innerHTML = '<p>請先登入以查看您的體重記錄</p>';
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         try {
-            const response = await fetch(`${GAS_CONFIG.webAppUrl}?action=getHistory&userId=${encodeURIComponent(userProfile.userId)}`, {
+            const response = await fetch(`${GAS_CONFIG.webAppUrl}?action=getHistory&userId=${encodeURIComponent(userProfile.userId)}&page=${page}&recordsPerPage=${recordsPerPage}`, {
                 method: 'GET',
                 mode: 'cors'
             });
@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const result = await response.json();
             
             if (result.success && result.data && result.data.length > 0) {
+                // 建立歷史記錄 HTML
                 let historyHTML = '<div class="history-table">';
                 historyHTML += '<div class="history-header">';
                 historyHTML += '<div class="history-cell">日期</div>';
@@ -195,10 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 historyHTML += '<div class="history-cell">類別</div>';
                 historyHTML += '</div>';
                 
-                // 最多顯示10筆記錄
-                const recentHistory = result.data.slice(0, 10);
-                
-                recentHistory.forEach(record => {
+                result.data.forEach(record => {
                     const date = new Date(record[0]).toLocaleDateString();
                     const weight = record[1];
                     const bmi = record[3];
@@ -229,6 +227,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 historyHTML += '</div>';
+                
+                // 加入分頁控制
+                historyHTML += '<div class="pagination">';
+                historyHTML += `<p>第 ${result.currentPage} 頁，共 ${result.totalPages} 頁</p>`;
+                historyHTML += '<div class="pagination-controls">';
+                
+                if (result.currentPage > 1) {
+                    historyHTML += `<button onclick="window.loadWeightHistory(1, ${recordsPerPage})">第一頁</button>`;
+                    historyHTML += `<button onclick="window.loadWeightHistory(${result.currentPage - 1}, ${recordsPerPage})">上一頁</button>`;
+                } else {
+                    historyHTML += '<button disabled>第一頁</button>';
+                    historyHTML += '<button disabled>上一頁</button>';
+                }
+                
+                if (result.currentPage < result.totalPages) {
+                    historyHTML += `<button onclick="window.loadWeightHistory(${result.currentPage + 1}, ${recordsPerPage})">下一頁</button>`;
+                    historyHTML += `<button onclick="window.loadWeightHistory(${result.totalPages}, ${recordsPerPage})">最後頁</button>`;
+                } else {
+                    historyHTML += '<button disabled>下一頁</button>';
+                    historyHTML += '<button disabled>最後頁</button>';
+                }
+                
+                historyHTML += '</div></div>';
+                
                 historyListDiv.innerHTML = historyHTML;
             } else {
                 historyListDiv.innerHTML = '<p>暫無體重記錄</p>';
@@ -239,6 +261,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // 讓 loadWeightHistory 可以在全局範圍中調用（用於分頁按鈕）
+    window.loadWeightHistory = loadWeightHistory;
+
     // 監聽 Line 登錄狀態變化
     document.addEventListener('lineLoginStatusChanged', function() {
         const userProfile = getCurrentUserProfile();
