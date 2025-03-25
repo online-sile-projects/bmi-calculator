@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://secondmortgagenews.com/articles/index.html</loc>
+        <loc>https://keepbmi.com/articles/index.html</loc>
         <lastmod>2025-03-25</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://secondmortgagenews.com/articles/2025-03-25-07-21-01-今日新聞摘要.html</loc>
-        <lastmod>2025-03-25-07-21-01</lastmod>
+        <loc>https://keepbmi.com/articles/2025-03-25-07-51-16-今日新聞摘要.html</loc>
+        <lastmod>2025-03-25-07-51-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://secondmortgagenews.com/articles/2025-03-25-07-16-18-新聞摘要分析.html</loc>
+        <loc>https://keepbmi.com/articles/2025-03-25-07-21-01-今日新聞摘要.html</loc>
+        <lastmod>2025-03-25-07-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://keepbmi.com/articles/2025-03-25-07-16-18-新聞摘要分析.html</loc>
         <lastmod>2025-03-25-07-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://secondmortgagenews.com/articles/2025-03-25-07-09-44-今日新聞摘要.html</loc>
+        <loc>https://keepbmi.com/articles/2025-03-25-07-09-44-今日新聞摘要.html</loc>
         <lastmod>2025-03-25-07-09</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
