@@ -2,13 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://keepbmi.com/articles/index.html</loc>
-        <lastmod>2025-03-25</lastmod>
+        <lastmod>2025-03-26</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
+        <loc>https://keepbmi.com/articles/2025-03-26-01-25-45-近期健康與時事新聞摘要-(2025-03-25).html</loc>
+        <lastmod>2025-03-26-01-25-45</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://keepbmi.com/articles/2025-03-25-07-51-16-今日新聞摘要.html</loc>
-        <lastmod>2025-03-25-07-51-16</lastmod>
+        <lastmod>2025-03-25-07-51</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
